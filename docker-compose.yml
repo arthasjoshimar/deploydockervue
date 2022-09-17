@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  clivue-app:
+    container_name: clivue-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8484:8080'
