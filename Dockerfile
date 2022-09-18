@@ -1,26 +1,27 @@
+#Bajamos la imagen:
 FROM node:lts-alpine 
 
-#instalamos http-server
+#instalamos http-server para que corra la app vue
 RUN npm install -g http-server
-
+#creamos un directorio app
 RUN mkdir /app
 
-# set current work dir
+#lo seteamos a ese directorio como el de trabajo
 WORKDIR /app
 
-# Copy package.json, packge-lock.json into current dir
+# Copiamos el package json y el package-lock.json para hacer el npm intall
 COPY package*.json ./
 
 # install dependencies
 RUN npm install
 
-# copy sources
+# copiamos de origen a destino: se pone . porque estamos ejecutando en la misma ruta del proyecto
 COPY . .
-# Run app
+# generamos el buil de la app en base al script de package.json 
 RUN npm run build
 
-# open default port
+# abrimos el puerto 8080 del contenedor que se cree
 EXPOSE 8080
 
-#EJECUTAMOS 
+#EJECUTAMOS los comandos propios de http-server y apuntamos a la carpeta dist donde se genero el build de la app
 CMD ["http-server", "dist"]
